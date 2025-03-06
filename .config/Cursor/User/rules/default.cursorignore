@@ -1,0 +1,20 @@
+# Default Cursor AI rule
+# This is a global rule that applies to all projects
+
+# Specify when this rule should be active
+when: always
+
+# Ignore node_modules and build directories in all projects
+ignore:
+  - "**/node_modules/**"
+  - "**/build/**"
+  - "**/dist/**"
+  - "**/.git/**"
+
+# Custom instructions for AI
+instructions: |
+  You are helping to write code in this project. Follow these guidelines:
+  1. Write clean, well-documented code
+  2. Follow the style conventions in existing files
+  3. Include appropriate error handling
+  4. Prioritize readability and maintainability 

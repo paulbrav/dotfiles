@@ -1,0 +1,9 @@
+[
+    // Place your key bindings here
+    // Example:
+    // {
+    //     "key": "ctrl+shift+l",
+    //     "command": "editor.action.selectAllMatches",
+    //     "when": "editorFocus && findWidgetVisible"
+    // }
+] 
