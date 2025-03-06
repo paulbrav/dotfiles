@@ -1,0 +1,71 @@
+# Useful shell aliases
+
+# Directory navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ~='cd ~'
+
+# List files
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias ls='ls --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+
+# Grep with color
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Add safety to destructive operations
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# Git shortcuts
+alias g='git'
+alias gs='git status'
+alias ga='git add'
+alias gaa='git add --all'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gp='git push'
+alias gl='git pull'
+alias gd='git diff'
+alias gco='git checkout'
+alias gb='git branch'
+alias glog='git log --oneline --decorate --graph'
+
+# System operations
+alias update='sudo apt update && sudo apt upgrade -y'
+alias install='sudo apt install'
+alias remove='sudo apt remove'
+alias autoremove='sudo apt autoremove'
+
+# Disk usage
+alias df='df -h'
+alias du='du -h'
+
+# File find
+alias ff='find . -type f -name'
+alias fd='find . -type d -name'
+
+# Process management
+alias psa='ps aux'
+alias psg='ps aux | grep'
+alias psme='ps -u $USER'
+
+# Make directory with parents
+alias mkdir='mkdir -p'
+
+# Show open ports
+alias ports='netstat -tulanp'
+
+# Get public IP
+alias myip='curl ifconfig.me'
+
+# Get weather
+alias weather='curl wttr.in' 

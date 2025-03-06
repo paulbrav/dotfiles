@@ -1,0 +1,78 @@
+! X resources file
+
+! XTerm settings
+xterm*faceName: DejaVu Sans Mono
+xterm*faceSize: 11
+xterm*background: #000000
+xterm*foreground: #ffffff
+xterm*cursorColor: #ffff00
+xterm*scrollBar: true
+xterm*rightScrollBar: true
+xterm*saveLines: 10000
+xterm*scrollTtyOutput: false
+xterm*scrollWithBuffer: true
+xterm*scrollKey: true
+xterm*loginShell: true
+xterm*utf8: 1
+xterm*selectToClipboard: true
+
+! URxvt settings
+URxvt*font: xft:DejaVu Sans Mono:size=11
+URxvt*letterSpace: -1
+URxvt*background: #000000
+URxvt*foreground: #ffffff
+URxvt*cursorColor: #ffff00
+URxvt*scrollBar: true
+URxvt*scrollBar_right: true
+URxvt*scrollstyle: plain
+URxvt*scrollTtyOutput: false
+URxvt*scrollWithBuffer: true
+URxvt*scrollTtyKeypress: true
+URxvt*saveLines: 10000
+URxvt*loginShell: true
+URxvt*perl-ext-common: default,matcher,clipboard
+URxvt*url-launcher: /usr/bin/xdg-open
+URxvt*matcher.button: 1
+URxvt*keysym.Shift-Control-V: perl:clipboard:paste
+URxvt*keysym.Shift-Control-C: perl:clipboard:copy
+URxvt*iso14755: false
+URxvt*iso14755_52: false
+
+! Color scheme
+! Black
+*color0: #000000
+*color8: #555555
+! Red
+*color1: #aa0000
+*color9: #ff5555
+! Green
+*color2: #00aa00
+*color10: #55ff55
+! Yellow
+*color3: #aa5500
+*color11: #ffff55
+! Blue
+*color4: #0000aa
+*color12: #5555ff
+! Magenta
+*color5: #aa00aa
+*color13: #ff55ff
+! Cyan
+*color6: #00aaaa
+*color14: #55ffff
+! White
+*color7: #aaaaaa
+*color15: #ffffff
+
+! XFT settings
+Xft.dpi: 96
+Xft.antialias: true
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.autohint: false
+Xft.lcdfilter: lcddefault
+
+! Cursor settings
+Xcursor.theme: default
+Xcursor.size: 16 

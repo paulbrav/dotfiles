@@ -1,0 +1,58 @@
+# GNU Screen configuration file
+
+# Disable the startup message
+startup_message off
+
+# Set a large scrollback buffer
+defscrollback 10000
+
+# Display a caption line at the bottom showing the window list and system load
+caption always "%{= kw}%-w%{= BW}%n %t%{-}%+w %-= %c"
+
+# Display status line at the bottom
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W}%c %{g}]'
+
+# Enable 256 colors
+term screen-256color
+
+# Use visual bell instead of audio bell
+vbell on
+vbell_msg "Bell in window %n"
+
+# Detach on hangup
+autodetach on
+
+# Don't display the copyright page
+startup_message off
+
+# Use UTF-8
+defutf8 on
+
+# Use alternate screen
+altscreen on
+
+# Window numbering starts at 1 not 0
+bind c screen 1
+bind ^c screen 1
+bind 0 select 10
+screen 1
+
+# Enable mouse scrolling and scroll bar history scrolling
+termcapinfo xterm* ti@:te@
+
+# Default windows
+screen -t Shell 1 bash
+screen -t Editor 2 vim
+screen -t Files 3 bash
+
+# Use Ctrl-a like in tmux
+escape ^Aa
+
+# Make navigating between windows easier
+bindkey "^[[1;5D" prev  # Ctrl-Left
+bindkey "^[[1;5C" next  # Ctrl-Right
+
+# F11 and F12 to switch between windows
+bindkey -k F1 prev
+bindkey -k F2 next 
