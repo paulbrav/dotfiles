@@ -1,0 +1,157 @@
+---
+description: C Coding Guidelines
+globs: *.c,*.h
+---
+# C Coding Guidelines
+
+## 1. Base Style Guide: Linux Kernel Style with Deviations
+
+- **Linux Kernel Style**: Primarily follow the Linux kernel style guide as the foundation for C code.
+- **Exceptions**: Deviate from the Linux kernel style where these guidelines specify otherwise, particularly for documentation and indentation.
+
+## 2. Code Organization
+
+### Header Files (`.h`)
+
+- **Declarations**: Use header files to declare functions, structures, enums, macros, and global variables.
+- **Header Guards**: Always include header guards to prevent multiple inclusions:
+  ```c
+  #ifndef FILENAME_H
+  #define FILENAME_H
+
+  /* declarations here */
+
+  #endif /* FILENAME_H */
+  ```
+  Use the filename in uppercase with underscores for the guard macro.
+- **Minimal Includes**: Include only necessary headers in each file to reduce compilation time and dependencies.
+- **System Headers**: Include system headers (e.g., `<stdio.h>`, `<stdlib.h>`) using angle brackets `<>`.
+- **Project Headers**: Include project-specific headers using double quotes `""`.
+
+### Source Files (`.c`)
+
+- **Grouping**: Group related functions and data structures within source files.
+- **Function Length**: Keep functions short and focused on performing a single, well-defined task. Break down complex logic into smaller functions.
+- **Logical Sections**: Separate logical sections within a source file (e.g., function groups, data structure definitions) with blank lines to improve readability.
+
+## 3. Formatting
+
+- **Indentation**: Use **4 spaces** for indentation. This deviates from the 8-space tabs of the Linux kernel style for better readability in modern editors and wider adoption. **Configure your editor to use spaces, not tabs.**
+- **Line Length**: Limit line length to **120 characters** for improved readability on various displays.
+- **Statements per Line**:  Put only one statement per line.
+- **Assignments per Line**: Put only one assignment per line.
+- **Braces for Conditionals**: Always use braces `{}` for conditional statements (`if`, `else`, `for`, `while`, `do-while`) even for single-line bodies, to enhance clarity and prevent errors:
+  ```c
+  if (condition) {
+      do_something();
+  } else {
+      do_something_else();
+  }
+  ```
+- **Brace Placement**: Place the opening brace at the end of the line and the closing brace on its own line, aligned with the start of the control statement.
+- **Spacing**:
+    - Space after keywords (e.g., `if`, `switch`, `case`, `for`, `do`, `while`, `return`).
+    - No space after function names in function calls or definitions.
+    - Use spaces around operators (e.g., `a = b + c;`).
+    - No space after `(` or before `)` in function calls, definitions, and control statements.
+- **Complex Expressions**: Break up complex expressions into multiple lines or use temporary variables to improve readability.
+
+## 4. Naming Conventions
+
+- **Functions**: `lowercase_with_underscores` (e.g., `get_user_data`, `process_input`).
+- **Variables**: `lowercase_with_underscores` (e.g., `user_id`, `input_buffer`).
+    - **Local Variables**: Can be short and concise (e.g., `i`, `tmp`, `len`), especially in small scopes.
+    - **Global Variables**: Should be descriptive and clearly indicate their global scope (though global variables should be minimized).
+- **Structs/Types**: `CamelCase` (e.g., `UserData`, `BufferInfo`).
+- **Enums**: `CamelCase` (e.g., `ErrorType`, `LogLevel`).
+- **Enum Constants**: `UPPERCASE_WITH_UNDERSCORES` prefixed with the enum name (e.g., `ERROR_TYPE_INVALID_INPUT`, `LOG_LEVEL_DEBUG`).
+- **Macros**: `UPPERCASE_WITH_UNDERSCORES` (e.g., `MAX_BUFFER_SIZE`, `ENABLE_FEATURE`).
+- **Constants**: `UPPERCASE_WITH_UNDERSCORES` (e.g., `DEFAULT_TIMEOUT`, `PI`).
+- **`typedef` Names**: Follow the naming convention of the type they represent (e.g., `typedef struct UserData UserData;`).
+
+## 5. Comments and Documentation
+
+- **Docstrings**: Use Java-style docstrings `/** ... */` for documenting functions, structures, enums, and important global variables. Include:
+  ```c
+  /**
+   * @brief Brief description of the function or structure.
+   *
+   * Detailed description providing more context and usage information.
+   *
+   * @param param1 Description of parameter 1.
+   * @param param2 Description of parameter 2.
+   * @return Description of the return value.
+   *         Indicate success or failure and possible error codes.
+   */
+  ```
+  - **`@brief`**: A concise, one-line summary.
+  - **Detailed description**:  Elaborate on the purpose, functionality, and usage.
+  - **`@param`**: Document each parameter, including its name, type, and purpose.
+  - **`@return`**: Describe the return value, including success/failure indications and possible error codes.
+  - **`@note`, `@warning`, `@bug`**: Use these tags for important notes, warnings, or known bugs.
+- **Single-line Comments**: Use `//` for single-line comments (C99 and later). For pre-C99 compatibility, use `/* ... */`.
+- **Clarity**: Comment complex or non-obvious code sections to explain the logic and intent.
+- **Avoid Redundancy**: Do not add comments that merely restate the code; focus on explaining *why* and *how*.
+
+## 6. Error Handling
+
+- **Return Value Checks**: Always check return values of functions for errors, especially system calls and library functions.
+- **Error Codes**: Handle errors using return codes and `errno`.
+- **Meaningful Errors**: Return meaningful and specific error codes instead of generic error indicators. Define custom error codes as enums or macros for clarity.
+- **Error Paths**: Make error handling paths as clean and readable as possible, avoiding deeply nested error checks.
+- **NULL Pointer Checks**: Check pointers for `NULL` before dereferencing them to prevent segmentation faults.
+- **`assert()`**: Use `assert()` liberally during development to check for conditions that should always be true. Disable assertions in production builds.
+
+## 7. Memory Management
+
+- **Allocation Checks**: Always check the return value of memory allocation functions (`malloc`, `calloc`, `realloc`) to ensure allocation succeeded. Handle allocation failures gracefully.
+- **Resource Release**: Ensure that all dynamically allocated memory and acquired resources (file handles, sockets, etc.) are properly released when no longer needed.
+- **`malloc`/`free` Pairing**: Pair every `malloc` with a corresponding `free` to prevent memory leaks. Similarly, pair resource acquisition with resource release (e.g., `open`/`close`).
+- **Integer Overflow/Underflow**: Be cautious with arithmetic operations to prevent integer overflow and underflow, especially when dealing with sizes and indices.
+
+## 8. Macros
+
+- **Minimize Macros**: Minimize the use of macros. Prefer `const` variables, `enum` constants, `inline` functions, and `static inline` functions as safer and more type-safe alternatives.
+- **Multi-statement Macros**: Multi-statement macros *must* be enclosed in a `do { ... } while(0)` block to ensure correct behavior in all contexts:
+  ```c
+  #define SAFE_FREE(ptr)                      \
+      do {                                    \
+          if ((ptr) != NULL) {                \
+              free(ptr);                      \
+              (ptr) = NULL;                   \
+          }                                   \
+      } while (0)
+  ```
+- **Existing Macros**: Use existing standard library or project-defined macros instead of reinventing them.
+- **Avoid Problematic Macros**: Avoid macros that:
+    - Affect control flow (e.g., `if/else` within macros).
+    - Depend on specific local variable names.
+    - Use arguments as l-values (modifying macro arguments).
+- **Parenthesize Arguments**: Always parenthesize macro arguments in both the macro definition and usage to prevent operator precedence issues.
+
+## 9. Variables and Types
+
+- **Minimize Global Variables**: Avoid global variables as much as possible. Encapsulate state within structures or functions. If globals are absolutely necessary, declare them `static` to limit scope or use `extern` judiciously.
+- **`const` Immutability**: Use the `const` keyword to indicate immutability for variables, function parameters, and function return values where appropriate.
+- **Initialization**: Initialize variables at the point of declaration whenever possible to improve code clarity and prevent uninitialized variable issues.
+- **Named Constants**: Avoid "magic numbers" and "magic strings." Use named constants (`#define` macros or `enum` constants) to represent literal values with meaningful names.
+- **`typedef` Usage**: Use `typedef` sparingly. Use it for:
+    - Opaque types (hiding implementation details).
+    - Complex function pointer types to improve readability.
+    - Abstracting away platform-specific types (e.g., size_t, intptr_t).
+
+## 10. Testing and Debugging
+
+- **Testing**: Write unit tests to verify the correctness of functions and modules. Use a testing framework if available or create simple test functions.
+- **`assert()`**: Use `assert()` to check for preconditions, postconditions, and invariants during development.
+- **Debug Printing**: Include debug printing capabilities (e.g., using `fprintf(stderr, ...)` or a custom logging function) that can be enabled or disabled via compile-time flags or macros (`#ifdef DEBUG`, `#ifndef NDEBUG`).
+- **Static Analysis**: Utilize static analysis tools (e.g., `clang-tidy`, `cppcheck`, `splint`) to detect potential bugs, style violations, and code smells automatically.
+
+## 11. General Practices
+
+- **C Standard**: Be aware of the C standard being used (C89/ANSI C, C99, C11, C17/C18) and ensure code is compatible with the target standard. Prefer modern C standards (C99 or later) for their improved features and safety.
+- **Simplicity and Clarity**: Strive for simplicity and clarity in code. Avoid overly clever or tricky expressions that might be hard to understand or maintain.
+- **Standard Library**: Don't reinvent functionality that is already available in the C standard library or well-established, portable libraries.
+- **Portability**: Write portable C code that compiles and runs correctly on different platforms and architectures. Be mindful of platform-specific assumptions.
+- **No Editor-Specific Configuration**: Avoid including editor modelines or editor-specific configuration directly in source files. Project-level editor configurations are acceptable.
+- **Code Reviews**: Conduct regular code reviews to maintain code quality, share knowledge, and enforce coding guidelines within the team.

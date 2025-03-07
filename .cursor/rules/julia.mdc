@@ -1,0 +1,83 @@
+---
+description: Julia Style Guide
+globs: *.jl
+---
+# JULIA STYLE GUIDE:
+
+## General Conventions
+- **Indentation**: Use 4 spaces for indentation.
+- **Function Focus**: Write functions instead of scripts to promote modularity and reusability.
+- **Type Specificity**: Avoid overly specific types in function signatures unless necessary for performance or clarity. Embrace Julia's dynamic typing.
+- **Mutating Functions**: Append `!` to names of functions that modify their arguments (e.g., `sort!` for in-place sorting).
+- **Field Access**: Prefer exported methods over direct field access to interact with objects, promoting encapsulation and maintainability.
+- **Error Handling**: Use `try-catch` blocks for error handling. Throw custom error types when appropriate to provide specific error information.
+
+## Naming Conventions
+- **Modules/Types**: `CapCase` (e.g., `MyModule`, `DataType`).
+- **Functions**: `lowercase_with_underscores` (e.g., `calculate_value`, `process_data`).
+- **Variables**: `lowercase_with_underscores` (e.g., `input_value`, `result_array`).
+- **Constants**: `UPPERCASE_WITH_UNDERSCORES` (e.g., `MAX_ITERATIONS`, `DEFAULT_VALUE`).
+
+## Program Entrypoint
+Use the following pattern for program entrypoints (similar to Python's `if __name__ == "__main__"`):
+
+\`\`\`julia
+if abspath(PROGRAM_FILE) == @\_\_FILE\_\_
+    # Main program code here
+end
+\`\`\`
+
+## Mathematical Variables
+- **UTF-8 Symbols**: Use UTF-8 variable names for mathematical symbols in mathematical expressions (e.g., `λ`, `α`, `β`, `γ`, `μ`, `σ`, `Σ`, `Π`, `∇`).
+  - This significantly improves code readability and mathematical correctness in relevant contexts.
+- **ASCII for General Names**: For general variables and function names (non-mathematical contexts), stick to standard ASCII lowercase with underscores for broader compatibility and ease of typing.
+
+## Documentation
+- **Docstrings**: Use Julia's docstring syntax (`""" ... """`) for documenting modules, types, functions, and methods.
+  - Write a concise one-line summary as the first sentence.
+  - Provide more detailed explanations, arguments, return values, and potential errors in subsequent paragraphs.
+  - Follow Julia's documentation conventions, which are similar in spirit to Google Python style but tailored for Julia.
+  - Use Markdown formatting within docstrings for enhanced readability.
+
+\`\`\`julia
+"""
+    my_function(x, y)
+
+One-line summary of what the function does.
+
+# Arguments
+- `x`: Description of argument x.
+- `y`: Description of argument y.
+
+# Returns
+- Description of the return value.
+
+# Examples
+\`\`\`julia
+julia> my_function(1, 2)
+3
+\`\`\`
+"""
+function my_function(x, y)
+    # Function implementation
+end
+\`\`\`
+
+## Code Organization
+- **File Structure**: Organize code into modules and packages for larger projects.
+- **Grouping**: Group related functions and types together within modules.
+- **Function Size**: Prefer small, focused functions that perform a single, well-defined task. Break down complex logic into smaller, manageable functions.
+- **Type Definitions**: Place type definitions (structs, enums, etc.) before the functions that operate on them to improve code readability and organization.
+- **Code Formatting**: Use `JuliaFormatter.jl` to automatically format your code and ensure consistent style across projects.
+
+## Performance
+- **Performance Awareness**: Be mindful of performance considerations in Julia. Use tools like `@code_warntype` and `@btime` to analyze and benchmark critical sections of code.
+- **Type Stability**: Strive for type stability in performance-critical functions to enable efficient compilation.
+- **Avoid Global Scope**: Minimize operations in the global scope, as code within functions is generally faster in Julia.
+
+## Testing
+- **Unit Tests**: Write unit tests using Julia's built-in `Test` module to ensure code correctness and prevent regressions.
+- **Test Coverage**: Aim for good test coverage, especially for core functionalities and complex logic.
+- **Integration Tests**: For larger projects, consider writing integration tests to verify the interaction between different components.
+\`\`\`
+

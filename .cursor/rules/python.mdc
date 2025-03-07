@@ -1,0 +1,35 @@
+---
+description: Python Style Guide
+globs: *.py
+---
+# PYTHON STYLE GUIDE:
+
+1. **Follow Google Python Style Guide**: This is a widely accepted style guide for Python code. It's a good idea to follow it to ensure consistency and readability of your code.
+
+2. **Use Type Hints**: Always use type hints that can be checked by mypy. This helps in making your code more readable and maintainable.
+
+3. **Explicitly Import Typing Modules**: Import typing modules explicitly. This makes it clear where the types are coming from.
+
+4. **Use Docstrings**: Use docstrings for all public functions/methods. This is a good practice as it helps in understanding what a function does, what arguments it takes, and what it returns.
+
+5. **Follow Ruff Guidance for Module Level Docstrings**: This is a specific guideline for module level docstrings. It's a good idea to follow it for consistency.
+
+6. **Follow Ruff Guidance for Import Sorting**: This is a specific guideline for import sorting. It's a good idea to follow it for consistency.
+
+7. **Maximum Line Length of 120 Characters**: This is a widely accepted maximum line length for Python code. It's a good idea to follow it to ensure readability of your code.
+
+8. **Use 4 Spaces for Indentation**: This is a widely accepted indentation style for Python code. It's a good idea to follow it to ensure consistency and readability of your code.
+
+9. **Follow Naming Conventions**: Follow the Python naming conventions for functions, variables, classes, and constants. This is a good practice as it helps in making your code more readable and maintainable.
+
+10. **Avoid Global Variables**: Global variables can make your code hard to understand and maintain. It's a good idea to avoid them.
+
+11. **Place Imports at Top in Order**: Place imports at the top of your file in the following order: standard library, third party, local application. This is a widely accepted order for Python imports.
+
+12. **Use uv as the Package Manager, Never pip**: uv is a package manager for Python that is designed to be fast and efficient. It's a good idea to use it instead of pip.
+
+13. **Use Ruff for Linting**: Ruff is a linter for Python that can help you catch errors and enforce your style guide. It's a good idea to use it.
+
+14. **Use `with` Context Managers for Resource Use**: The `with` statement is used to wrap the execution of a block of code within methods defined by a context manager. It's a good idea to use it for resource management.
+
+15. **Code Organization**: Organize your code as follows: constants at the top, followed by classes, then functions. Use 2 blank lines between top-level classes/functions, and 1 line between methods. This is a widely accepted way to organize Python code.

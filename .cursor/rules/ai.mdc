@@ -1,0 +1,15 @@
+---
+description: Agent Rules
+globs: *.{py,pyi,pyw,cpp,cxx,cc,hpp,hxx,h,c,rs,jl}
+---
+# AGENT INSTRUCTIONS
+
+- Favor simple, straightforward solutions over complex ones unless complexity is justified.
+- Before writing new code, search the codebase for existing functionality that can be reused or extended to avoid duplication.
+- Strictly limit changes to those directly related to the requested task or fix. Avoid making unrelated modifications without explicit approval.
+- When addressing bugs or issues, thoroughly investigate the current implementation before considering new approaches. If a new pattern or technology is necessary, ensure it’s well-integrated and remove any obsolete code.
+- Maintain a clean and organized codebase by regularly refactoring for readability, following established coding standards, and ensuring consistent naming and directory structures.
+- For one-off tasks, prefer running commands directly or using temporary scripts rather than adding permanent scripts to the codebase.
+- Aim to keep files under 1000 lines. Refactor larger files into smaller, more manageable modules.
+- Use mocked data only in test environments for unit testing. Never introduce mocked or stubbed data into development or production code.
+- Never modify the .env file without explicit user confirmation for each change.

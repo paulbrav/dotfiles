@@ -1,0 +1,65 @@
+---
+description: RUST STYLE GUIDE
+globs: *.rs
+---
+## RUST STYLE GUIDE:
+
+1.  **Code Formatting and Style:**
+    *   **Enforce code formatting using `rustfmt`.**  Run `cargo fmt` regularly to automatically format your code according to the official Rust style guidelines. This ensures consistency across the codebase.
+    *   **Utilize `rust-clippy` for static analysis.** Integrate `cargo clippy` into your development workflow to catch common mistakes, enforce best practices, and improve code quality. Address Clippy warnings to write idiomatic and efficient Rust code.
+
+2.  **Error Handling:**
+    *   **Employ `Result` and `Option` for error handling.**  Use `Result<T, E>` to represent fallible operations and `Option<T>` for potentially absent values. Avoid `panic!` for recoverable errors.
+    *   **Prefer explicit error handling over `unwrap()` and `expect()`.**  Handle errors gracefully using `match`, `if let`, `?` operator, or combinators like `map_err`, `and_then`, `or_else`.
+    *   **Create custom error types using `enum` or structs.** Define specific error types to provide rich error information and improve error propagation and handling. Consider libraries like `thiserror` or `anyhow` for simplifying error handling.
+
+3.  **Ownership and Borrowing:**
+    *   **Leverage Rust's ownership system for memory safety.** Design your code to take advantage of ownership, borrowing, and lifetimes to prevent common memory-related bugs like dangling pointers and data races.
+    *   **Minimize borrowing lifetimes.** Aim for clear ownership transfers and reduce the complexity of borrowing where possible to improve code clarity and reduce lifetime annotations.
+    *   **Use references (`&`) and mutable references (`&mut`) appropriately.** Understand the rules of borrowing and mutability to ensure data integrity and prevent runtime errors.
+
+4.  **Naming Conventions:**
+    *   **Follow standard Rust naming conventions:**
+        *   `functions`, `variables`, `modules`: `lowercase_with_underscores`
+        *   `Types`, `Enums`, `Traits`, `Structs`: `CamelCase`
+        *   `CONSTANTS`: `SCREAMING_SNAKE_CASE`
+
+5.  **Documentation:**
+    *   **Write comprehensive Rustdoc comments.** Document all public items (`///`) with clear explanations, examples, and usage instructions. Use `//!` for crate and module level documentation.
+    *   **Include examples in Rustdoc comments.**  Provide runnable examples in your documentation to demonstrate how to use your code and make it easier for users to understand.
+    *   **Document public APIs clearly and concisely.** Focus on explaining what the code does, how to use it, and any important considerations or limitations.
+
+6.  **Modularity and Organization:**
+    *   **Organize code into logical modules.**  Use modules to namespace code, improve organization, and control visibility. Keep modules focused and cohesive.
+    *   **Keep modules and functions small and focused.**  Break down complex logic into smaller, manageable units to improve readability, maintainability, and testability.
+
+7.  **Testing:**
+    *   **Write unit tests and integration tests.**  Ensure comprehensive test coverage for all critical functionality. Use `#[test]` attribute for unit tests and create integration tests in the `tests` directory.
+    *   **Use `cargo test` to run tests.**  Integrate testing into your development workflow and run tests frequently to catch regressions early.
+
+8.  **Abstraction and Code Reuse:**
+    *   **Utilize traits for abstraction and polymorphism.**  Define traits to create reusable interfaces and enable generic programming.
+    *   **Consider trait objects for dynamic dispatch when appropriate.** Use trait objects (`Box<dyn Trait>`, `&dyn Trait`) for runtime polymorphism when the concrete type is not known at compile time.
+    *   **Prefer generic functions and data structures.**  Write generic code using type parameters `<T>` to maximize code reuse and flexibility.
+
+9.  **Functional Programming:**
+    *   **Embrace iterators and functional programming patterns.**  Use iterators, closures, and higher-order functions like `map`, `filter`, `fold`, etc., for concise and expressive code.
+    *   **Minimize mutability.**  Prefer immutable data structures and functional approaches to reduce side effects and improve code clarity and reasoning. Use `let` bindings by default and only use `mut` when necessary.
+
+10. **Pattern Matching:**
+    *   **Use `match` expressions for exhaustive pattern matching.**  Leverage `match` for control flow based on data structures like enums and structs, ensuring all possible cases are handled.
+    *   **Utilize `if let` and `while let` for simpler pattern matching.**  Use `if let` and `while let` for concise pattern matching when you only need to handle a single pattern.
+
+11. **Dependency Management:**
+    *   **Leverage Cargo for dependency management.**  Use `Cargo.toml` to manage project dependencies and ensure reproducible builds.
+    *   **Search for and utilize existing crates from crates.io.**  Explore the Rust ecosystem and leverage existing crates to avoid reinventing the wheel and benefit from community-maintained libraries.
+
+12. **Performance:**
+    *   **Be mindful of performance implications.**  Understand the performance characteristics of different Rust constructs and data structures.
+    *   **Use profiling tools to identify performance bottlenecks.**  Employ tools like `perf`, `flamegraph`, or `cargo-profiler` to analyze performance and optimize critical sections of code.
+
+13. **Asynchronous Programming (when applicable):**
+    *   **Use `async`/`.await` for asynchronous operations.**  Employ `async` and `.await` for writing non-blocking asynchronous code when dealing with I/O-bound tasks.
+    *   **Choose appropriate async runtimes (e.g., `tokio`, `async-std`).** Select an async runtime that suits your project's needs and dependencies.
+
+These improved rules aim to provide more specific and actionable guidance for writing idiomatic, safe, and efficient Rust code. Let me know if you have any other questions.

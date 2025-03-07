@@ -1,0 +1,89 @@
+---
+description: C++ Coding Guidelines
+globs: *.h,*,hpp,*.cpp
+---
+# C++ Coding Guidelines
+
+1. **Follow the Google C++ Style Guide**: Adhere to the Google C++ Style Guide as a foundation for consistent and readable code.
+
+2. **Use Modern C++ Headers**:  Use modern C++ headers (without the `.h` extension, e.g., `<iostream>`, `<vector>`, `<memory>`).
+
+3. **Exception Handling**: Employ exceptions for error handling to improve code clarity and robustness. Avoid returning error codes for recoverable errors.
+
+4. **RAII for Resource Management**:  Utilize RAII (Resource Acquisition Is Initialization) to manage resources (memory, file handles, etc.) automatically. This prevents leaks and simplifies resource management.
+
+5. **Smart Pointers**:  Prefer smart pointers (`std::unique_ptr`, `std::shared_ptr`, `std::weak_ptr`) over raw pointers for memory management to ensure automatic deallocation and prevent memory leaks. Use `std::make_unique` and `std::make_shared` for object creation with smart pointers.
+
+6. **Naming Conventions**:
+   - **Functions**: `lowercase_with_underscores` (e.g., `calculate_value`, `process_data`).
+   - **Variables**: `lowercase_with_underscores` (e.g., `input_value`, `result_count`).
+   - **Classes**: `CamelCase` (e.g., `DataProcessor`, `UserInputHandler`).
+   - **Constants**: `kCamelCase` (e.g., `kMaxValue`, `kDefaultName`). Use a leading `k` to denote constants. Use trailing underscore for member constants (e.g., `kMemberConstant_`).
+   - **Macros**: `UPPERCASE_WITH_UNDERSCORES` (e.g., `MAX_BUFFER_SIZE`, `ENABLE_LOGGING`). Minimize macro usage.
+   - **Member Variables**: `lowercase_with_underscores_` (e.g., `data_buffer_`, `current_index_`). Use a trailing underscore to clearly identify member variables.
+   - **Namespaces**: `lowercase_with_underscores` (e.g., `my_library`, `utils`).
+
+7. **Documentation with Docstrings**: Use Java-style docstrings `/** ... */` for documenting classes, functions, methods, and namespaces. Include:
+   - **@brief**: Brief description of the entity.
+   - **Detailed description**:  More in-depth explanation.
+   - **@param**: Description of each parameter, including name and purpose.
+   - **@return**: Description of the return value.
+   - **@throws**: Document exceptions that the function may throw.
+   - **@tparam**: For template parameters, describe their purpose and constraints.
+
+   Example:
+   ```cpp
+   /**
+    * @brief Processes input data and returns a result.
+    *
+    * This function takes input data, performs some processing, and returns the processed result.
+    *
+    * @param inputData The data to be processed.
+    * @return The processed data.
+    * @throws std::runtime_error if processing fails.
+    */
+   ReturnType processData(const DataType& inputData);
+   ```
+   Use `//` for single-line comments within function bodies.
+
+8. **Indentation**: Indent with 4 spaces. Be consistent throughout the project. Configure your editor to use spaces, not tabs.
+
+9. **Namespaces for Organization**: Use namespaces to prevent naming collisions and organize code into logical modules. Avoid `using namespace std;` in header files and large scopes. In `.cpp` files, limit `using namespace` to small, well-defined scopes if necessary. Prefer explicit qualification (e.g., `std::vector`) or limited `using` directives (e.g., `using std::vector;`).
+
+10. **C++ Standard Library**: Prefer using the C++ Standard Library algorithms and data structures whenever possible. Leverage `<algorithm>`, `<numeric>`, `<vector>`, `<string>`, `<map>`, etc.
+
+11. **Templates and Generic Programming**: Utilize templates and generic programming to write reusable and type-safe code.
+
+12. **Class Design**: Design classes with clear interfaces, well-defined responsibilities, and proper encapsulation. Follow SOLID principles where applicable.
+
+13. **Minimize Raw Pointers**: Minimize the use of raw pointers. When raw pointers are necessary (e.g., for C API interaction or performance-critical code), ensure they are carefully managed and documented. Prefer references over pointers when possible.
+
+14. **`const` and `constexpr`**: Use `const` for immutability whenever possible for variables, function parameters, and member functions. Use `constexpr` for compile-time evaluation where appropriate to improve performance and enforce compile-time constants.
+
+15. **Avoid Macros**: Avoid using macros unless absolutely necessary. Prefer `inline` functions, `constexpr` variables, and templates as safer and more type-safe alternatives. If macros are unavoidable, document them thoroughly and use uppercase names with underscores.
+
+16. **`override` Keyword**: Always use the `override` keyword when overriding virtual functions to improve code clarity and catch errors at compile time.
+
+17. **`[[nodiscard]]` Attribute**: Apply the `[[nodiscard]]` attribute to functions where ignoring the return value is likely to be an error.
+
+18. **Include Organization**: Organize includes in the following order, separated by blank lines:
+    - Related header (e.g., `MyClass.h` for `MyClass.cpp`)
+    - C system headers (e.g., `<cstdio>`, `<cmath>`)
+    - C++ standard library headers (e.g., `<vector>`, `<iostream>`)
+    - Third-party libraries' headers (e.g., `<boost/optional.hpp>`)
+    - Project-specific headers (e.g., `"utils.h"`, `"MyOtherClass.h"`)
+
+    Use `<>` for standard library and system headers, and `""` for project-specific headers.
+
+19. **Brace Initialization**: Use brace initialization (`{}`) for variables and objects to ensure consistency, prevent narrowing conversions, and for aggregate initialization.
+
+20. **Minimize Global Variables**: Avoid global variables. Encapsulate state within classes or functions. If global constants are necessary, declare them as `constexpr` or `const` within namespaces.
+
+21. **Forward Declarations**: Use forward declarations in header files to minimize include dependencies and reduce compilation time. Include headers only in `.cpp` files when the full definition is needed.
+
+22. **Code Reviews**: Conduct regular code reviews to maintain code quality, share knowledge, and enforce coding guidelines.
+
+23. **Static Analysis**: Utilize static analysis tools (e.g., Clang-Tidy, SonarQube) to automatically detect potential bugs, style violations, and code smells.
+
+24. **Testing**: Write unit tests using a testing framework (e.g., Google Test, Catch2) to ensure code correctness and prevent regressions. Aim for high test coverage, especially for critical components.
+

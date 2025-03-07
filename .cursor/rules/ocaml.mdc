@@ -1,0 +1,167 @@
+---
+description: OCaml Style Guidelines
+globs: *.ml, *.mli, *.mll, *.mly, *.cmi, *.cmo, *.cma, *.cmx, *.cmxa
+---
+# OCAML STYLE GUIDE
+
+## 1. Formatting
+
+- **Indentation**: Use **2 spaces** for indentation. Be consistent throughout the project. Configure your editor to use spaces, not tabs.
+- **Line Length**: Limit line length to **80-100 characters** for readability. Break lines at reasonable points, such as after commas, operators, or function arguments.
+- **Spacing**:
+    - Use a single space around binary operators (e.g., `+`, `-`, `*`, `=`, `<>`).
+    - No space after unary operators (e.g., `-`, `not`).
+    - Use a space after commas in lists, tuples, and function arguments.
+    - No space before semicolons `;` (except in specific cases like `for` loops).
+    - Use a space after semicolons in sequences `e1; e2`.
+    - Use a space after colons `:` in type annotations.
+    - No space around `->` in function types.
+    - Use parentheses sparingly, only when necessary for precedence or clarity. OCaml's precedence rules are well-defined, so avoid redundant parentheses.
+- **Vertical Spacing**:
+    - Use blank lines to separate logical blocks of code, such as function definitions, type declarations, and module sections.
+    - Generally, one blank line is sufficient between top-level definitions.
+
+**Example:**
+
+```ocaml
+let add x y =
+  x + y
+
+let square x =
+  x * x
+
+let calculate_area radius =
+  let pi = 3.14159 in
+  pi *. square radius
+```
+
+## 2. Naming Conventions
+
+- **Modules**: `CamelCase` with the first letter capitalized (e.g., `ListUtils`, `DataStructures`). Module filenames should match the module name (e.g., `listUtils.ml`, `DataStructures.ml`).
+- **Types**: `lowercase` or `lowercase_with_underscores` (e.g., `int`, `string`, `user_data`, `tree_node`). Type constructors within variant types should be `CapCase` (see below).
+- **Functions**: `lowercase` or `lowercase_with_underscores` (e.g., `add`, `calculate_area`, `process_data`). Choose descriptive names that clearly indicate the function's purpose.
+- **Variables**: `lowercase` or `lowercase_with_underscores` (e.g., `x`, `y`, `radius`, `user_name`). Use short, meaningful names, especially for local variables.
+- **Constants**: `UPPERCASE` or `UPPERCASE_WITH_UNDERSCORES` (e.g., `PI`, `MAX_VALUE`, `DEFAULT_NAME`).
+- **Variant Type Constructors**: `CapCase` (e.g., `Some`, `None`, `Ok`, `Error`, `Leaf`, `Node`). This distinguishes them from variables and functions.
+- **Record Labels**: `lowercase_with_underscores` (e.g., `name`, `age`, `address`, `value`).
+- **Exception Constructors**: `CapCase` (e.g., `NotFound`, `InvalidArgument`, `EndOfFile`).
+
+**Example:**
+
+```ocaml
+module ListUtils = struct
+  type 'a list_result =
+    | Ok of 'a list
+    | Error of string
+
+  let map_result f lst =
+    (* ... implementation ... *)
+    Ok []
+
+end
+
+type user_info = {
+  name : string;
+  age : int;
+  city : string;
+}
+
+exception InvalidInput of string
+```
+
+## 3. Documentation
+
+- **Comments**: Use `(* ... *)` for comments.
+    - Write comments to explain non-obvious logic, algorithms, or design decisions.
+    - Avoid commenting the obvious. Code should ideally be self-documenting through clear naming and structure.
+    - For public functions and modules, write comments that explain their purpose, arguments, and return values.
+- **Interface Files (`.mli`)**:
+    - Create interface files (`.mli`) for modules to explicitly define the module's signature and public interface.
+    - Document public types, functions, and values in the `.mli` file using comments. This serves as the primary documentation for module users.
+    - Keep `.mli` files concise and focused on the public API. Hide implementation details in the `.ml` file.
+
+**Example `.ml` file:**
+
+```ocaml
+(* listUtils.ml *)
+module ListUtils = struct
+  (** [map_result f lst] applies function [f] to each element of list [lst]
+      and returns a result type indicating success or failure. *)
+  let map_result f lst =
+    (* ... implementation ... *)
+    Ok []
+end
+```
+
+**Example `.mli` file:**
+
+```ocaml
+(* listUtils.mli *)
+module ListUtils : sig
+  (** ['a list_result] is a result type for list operations. *)
+  type 'a list_result =
+    | Ok of 'a list
+    | Error of string
+
+  (** [map_result f lst] applies function [f] to each element of list [lst]
+      and returns a result type indicating success or failure. *)
+  val map_result : ('a -> 'b) -> 'a list -> 'b list_result
+end
+```
+
+## 4. Error Handling
+
+- **`Result` Type**: Prefer using the `Result.t` type (or a custom result type) for functions that can fail, especially for recoverable errors. This makes error handling explicit and type-safe.
+- **Exceptions**: Use exceptions for truly exceptional situations, such as:
+    - Programming errors (e.g., invalid arguments, unexpected states).
+    - Unrecoverable errors (e.g., file not found, network connection failure).
+    - Situations where the caller cannot reasonably handle the error.
+- **Avoid Overusing Exceptions**: Don't use exceptions for normal control flow or expected error conditions. `Result` type is generally better for these cases.
+- **Catch Exceptions Judiciously**: Catch exceptions only when you can meaningfully handle them. Avoid catching and ignoring exceptions silently.
+- **Custom Exceptions**: Define custom exception types to provide more specific error information.
+
+**Example using `Result` type:**
+
+```ocaml
+let read_file filename =
+  try
+    let ic = open_in filename in
+    let content = really_input_string ic (in_channel_length ic) in
+    close_in ic;
+    Ok content
+  with Sys_error msg ->
+    Error ("Error reading file: " ^ msg)
+
+let process_file filename =
+  match read_file filename with
+  | Ok content ->
+     (* Process the content *)
+     print_endline "File content:";
+     print_endline content;
+     Ok ()
+  | Error err_msg ->
+     Printf.eprintf "Error: %s\n" err_msg;
+     Error err_msg
+```
+
+## 5. Modules and Structure
+
+- **Modular Design**: Break down code into logical modules to improve organization, reusability, and maintainability.
+- **Abstract Data Types (ADTs)**: Use modules to implement ADTs, hiding implementation details and exposing only a well-defined interface.
+- **Functors**: Use functors for code reuse and genericity when you need to parameterize modules over other modules. Use them when appropriate, but avoid over-engineering.
+- **Namespaces**: Modules provide namespaces, preventing naming collisions. Leverage module prefixes (e.g., `List.map`, `MyModule.my_function`) to access module members.
+- **`open` Keyword**: Use `open` sparingly, especially in larger modules, as it can reduce code clarity and potentially lead to naming conflicts. Prefer qualified names (e.g., `List.map`) for better readability and explicitness.  It can be acceptable in local scopes or within small modules where the context is clear.
+- **`include` Keyword**: Use `include` to compose modules and reuse existing module implementations. Be mindful of potential naming conflicts when including modules.
+
+## 6. Best Practices
+
+- **Immutability**: Embrace immutability as much as possible. Prefer pure functions that do not have side effects. Use immutable data structures by default. This leads to more predictable, testable, and maintainable code.
+- **Pattern Matching**: Use pattern matching extensively for destructuring data structures (variants, tuples, records) and for clear, concise conditional logic. Pattern matching is a powerful and idiomatic feature of OCaml.
+- **Type Inference**: Rely on OCaml's strong type inference to reduce verbosity. Type annotations are often unnecessary but can be helpful for clarity, especially in interface files or for complex types.
+- **Use the Standard Library**: Leverage the rich OCaml standard library (e.g., `List`, `Array`, `String`, `Hashtbl`, `Map`, `Set`, `Result`, `Option`). Familiarize yourself with the standard library modules to avoid reinventing the wheel.
+- **Tail Recursion**: Be mindful of stack usage and use tail recursion when possible to avoid stack overflows in recursive functions, especially for potentially large inputs.
+- **Performance**: Consider performance implications when writing code, especially in performance-critical sections. Use profiling tools to identify bottlenecks and optimize accordingly.
+- **Testing**: Write unit tests to ensure the correctness of your code. Use a testing framework like `OUnit` or `Alcotest`.
+- **Code Reviews**: Conduct code reviews to maintain code quality, share knowledge, and enforce coding guidelines within a team.
+- **Consistency**: Be consistent in your coding style throughout a project. Consistent style improves readability and maintainability.
+
