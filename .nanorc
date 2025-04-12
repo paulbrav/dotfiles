@@ -1,0 +1,29 @@
+\
+## ~/.nanorc - Configuration for the nano text editor
+## See `man nanorc` for a full list of options
+
+## Editing settings
+set autoindent      # Automatically indent new lines to the same level as the previous line
+set constantshow    # Show cursor position constantly on the status bar
+set linenumbers     # Display line numbers on the left side
+set mouse           # Enable mouse support (requires compatible terminal)
+set softwrap        # Enable soft line wrapping (don't break long lines)
+set tabsize 4       # Set tab width to 4 spaces
+set tabstospaces    # Convert typed tabs to spaces
+set trimblanks      # Remove trailing whitespace when saving files
+set atblanks        # Wrap lines at whitespace instead of always at the edge
+
+## File handling
+set backup          # Create backup files (~ suffix)
+set backupdir "~/.nano-backups" # Directory to store backup files
+set historylog      # Remember search/replace history across sessions
+
+## Interface
+# set smoothscroll    # Scroll text smoothly line by line (can feel slow)
+# set titlecolor bold,white,blue # Example: Set title bar color
+# set statuscolor bold,white,green # Example: Set status bar color
+
+## Syntax Highlighting (Adjust paths if necessary)
+## Include default syntax highlighting rules. Paths may vary by distribution/OS.
+include "/usr/share/nano/*.nanorc"
+include "/usr/share/nano/extra/*.nanorc"
