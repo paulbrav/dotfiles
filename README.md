@@ -15,6 +15,8 @@ This repository includes configurations for:
 - **Version Control**: `.gitconfig`
 - **Terminal Multiplexer**: `.tmux.conf`, `.screenrc`
 - **Terminal/Console**: `.inputrc`, `.dircolors`, `.Xresources`
+- **Debugging**: `.gdbinit`
+- **Neovim**: `init.lua` (via `~/.config/nvim/init.lua` symlink)
 
 ## Installation
 
@@ -35,7 +37,25 @@ chmod +x setup.sh
 The setup script will:
 - Create symlinks from your home directory to the dotfiles in this repository
 - Back up any existing dotfiles to `~/dotfiles_backup_[timestamp]`
+- Set up GDB with pretty printers and a local configuration file.
+- Set up Neovim by symlinking the `init.lua` configuration file.
 - Source your new `.bashrc` to apply changes immediately
+
+## Application Specific Setup
+
+### GDB
+
+The setup script configures GDB by:
+- Symlinking the main `.gdbinit` file.
+- Downloading standard C++ library pretty printers to `~/.gdb/python/printers.py` (if not already present).
+- Creating an empty `~/.gdbinit.local` file for machine-specific GDB commands that won't be tracked by git.
+
+### Neovim (nvim)
+
+The setup script configures Neovim by:
+- Ensuring the `~/.config/nvim` directory exists.
+- Symlinking the `init.lua` file from this repository to `~/.config/nvim/init.lua`.
+- **Note:** The first time you run `nvim` after setup, the `lazy.nvim` plugin manager will automatically install the plugins specified in `init.lua`. This might take a moment.
 
 ## Customization
 
