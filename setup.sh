@@ -49,6 +49,7 @@ dotfiles=(
     .emacs
     .spacemacs
     .gdbinit
+    .nanorc
 )
 
 # Function to create symlink
