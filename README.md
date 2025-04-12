@@ -11,7 +11,7 @@ Dotfiles are configuration files in Unix-like systems that customize your enviro
 This repository includes configurations for:
 
 - **Shell**: `.bashrc`, `.bash_profile`, `.profile`, `.aliases`
-- **Text Editor**: `.vimrc`
+- **Text Editor**: `.vimrc`, `.nanorc`
 - **Version Control**: `.gitconfig`
 - **Terminal Multiplexer**: `.tmux.conf`, `.screenrc`
 - **Terminal/Console**: `.inputrc`, `.dircolors`, `.Xresources`
