@@ -5,3 +5,5 @@
 # Please adapt and uncomment the following lines:
 #	name = PB
 #	email = git_phony.fqo7y@simplelogin.com
+[core]
+	excludesFile = /home/paulbrav/.gitignore_global
