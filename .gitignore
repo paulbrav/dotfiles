@@ -1,3 +1,4 @@
 # Unignore VS Code and Cursor directories
 !.vscode/
 !.cursor/
+**backup**
