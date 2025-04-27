@@ -98,11 +98,17 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
+# ~/.bash_aliases (for general aliases across machines) or
+# ~/.aliases.local (for machine-specific aliases), instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
+fi
+
+# Source machine-specific aliases if the file exists
+if [ -f ~/.aliases.local ]; then
+    . ~/.aliases.local
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -167,6 +173,9 @@ eval "$(starship init bash)"
 # Directory navigation
 . /usr/share/autojump/autojump.sh
 
-# ===== CUSTOM ALIASES =====
-# SSH shortcuts
-alias panda='ssh paulbrav@10.27.27.118'  # Consider using hostname instead of IP
+
+# Source local customizations if they exist
+# This file (~/.bashrc.local) is intended for machine-specific configurations,
+# environment variables (especially secrets like API keys), or overrides
+# that should not be checked into version control.
+[ -f ~/.bashrc.local ] && source ~/.bashrc.local
