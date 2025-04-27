@@ -1,0 +1,63 @@
+{
+    // General editor settings
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.eol": "\n", // Enforce LF line endings
+    "editor.formatOnSave": true, // General setting, enable globally
+    "workbench.editor.enablePreview": false, // Optional: Disable preview mode
+    "explorer.compactFolders": false, // Optional: Personal preference
+    // Remote SSH setting for 'myth' machines (disable file locking)
+    "remote.SSH.useFlock": false,
+    // ⬇️ NEW – put lock files on local /tmp instead of AFS
+    "remote.SSH.lockfilesInTmp": true,
+    // ⬇️ NEW – (strongly recommended) install the whole server in /tmp
+    "remote.SSH.serverInstallPath": {
+        "myth.stanford.edu": "/tmp/${env:USER}/.vscode-server"
+    },
+    // C specific settings (Stanford CS107 Style Guide)
+    "[c]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.rulers": [
+            120
+        ],
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+        "editor.formatOnSave": true
+        // Note: No specific formatter is mandated by the CS107 guide, but clangd is a good choice.
+        // Consider installing the C/C++ extension pack from Microsoft as well.
+    },
+    // C++ specific settings (aligning with C for consistency here)
+    "[cpp]": {
+        "editor.tabSize": 4, // Although Google C++ uses 2, keeping 4 for consistency with C guide provided
+        "editor.insertSpaces": true,
+        "editor.rulers": [
+            120
+        ],
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+        "editor.formatOnSave": true
+        // Consider installing the C/C++ extension pack from Microsoft as well.
+    },
+    // Python specific settings (Google Style Guide + Ruff/MyPy)
+    "[python]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.rulers": [
+            120
+        ],
+        "editor.formatOnSave": true,
+        // Set Ruff as the default formatter and linter (requires Ruff extension)
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.codeActionsOnSave": {
+            // Run Ruff fixers and organize imports on save
+            "source.fixAll.ruff": "explicit",
+            "source.organizeImports.ruff": "explicit"
+        }
+        // Note: MyPy integration is typically handled by the MyPy Type Checker extension.
+        // Ensure it's installed and configured (often via pyproject.toml or workspace settings).
+        // Global enabling via settings.json can sometimes conflict with project-specific setups.
+    },
+    // General terminal settings
+    "terminal.integrated.fontSize": 14,
+    "workbench.colorTheme": "Visual Studio Dark - C++",
+    "C_Cpp.intelliSenseEngine": "disabled"
+}
